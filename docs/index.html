@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISBNスキャナー</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>本</text></svg>">
+</head>
+<body>
+    <div class="app">
+        <header>
+            <h1>ISBNスキャナー</h1>
+            <p class="subtitle">本をスキャンしてライブラリに追加</p>
+        </header>
+
+        <main>
+            <section class="scanner-section">
+                <div class="scanner-container">
+                    <div id="reader"></div>
+                    <p class="scanner-hint">カメラをISBNバーコードに向けてください</p>
+                </div>
+                <div class="scanner-controls">
+                    <button id="startBtn" class="btn btn-primary">カメラ開始</button>
+                    <button id="stopBtn" class="btn btn-secondary" disabled>カメラ停止</button>
+                    <select id="cameraSelect" class="select">
+                        <option value="">カメラを選択</option>
+                    </select>
+                </div>
+            </section>
+
+            <section class="books-section">
+                <div class="section-header">
+                    <h2>スキャン済み書籍</h2>
+                    <span class="count" id="count">0冊</span>
+                </div>
+
+                <div class="actions">
+                    <button id="saveBtn" class="btn btn-primary" disabled>保存</button>
+                    <button id="downloadBtn" class="btn btn-secondary" disabled>CSVダウンロード</button>
+                    <button id="clearBtn" class="btn btn-danger" disabled>クリア</button>
+                </div>
+
+                <div id="booksList" class="books-list">
+                    <p class="empty-message">まだ本がスキャンされていません</p>
+                </div>
+            </section>
+        </main>
+
+        <footer>
+            <p>© 2026 Library Management Tools | <a href="USAGE.html">使い方</a></p>
+        </footer>
+    </div>
+
+    <div id="loading" class="loading hidden">
+        <div class="spinner"></div>
+        <p>本情報を取得中...</p>
+    </div>
+
+    <script src="https://unpkg.com/html5-qrcode@2.3.8/html5-qrcode.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
