@@ -50,10 +50,10 @@ uv run python camera_isbn.py -o my_books.csv
 - スキャンしたISBNが右側のリストに追加される
 - 「保存」ボタンでCSVファイルに保存
 - 「ダウンロード」でCSVをダウンロード
-- ウィンドウを閉じると自動保存
-- `q` キーで終了
+- ウィンドウを閉じると自動保存キーで終了
 
-### 2. Booklogに自動追加
+### 2.
+- Booklogに自動追加
 
 CSVのISBNを自動的にBooklog.jpに追加します。
 
@@ -123,7 +123,7 @@ uv run playwright install chromium
 - Flask
 - Playwright（Booklog機能のみ）
 
-> Intel Macをお使いの場合: HomebrewでOpenCVをインストールする場合、パスは /usr/local/bin（Apple Siliconは /opt/homebrew/bin）。
+> **Intel Macをお使いの場合**: HomebrewでOpenCVをインストールする場合、パスは /usr/local/bin（Apple Siliconは /opt/homebrew/bin）。
 
 ## ライセンス
 

@@ -1,73 +1,313 @@
-# ISBNスキャナー - ブラウザ版
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ISBNスキャナー - 使い方</title>
+    <style>
+        :root {
+            --primary: #4f46e5;
+            --primary-hover: #4338ca;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --text: #1e293b;
+            --text-muted: #64748b;
+            --border: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+            --radius: 12px;
+        }
 
-ISBNバーコードをカメラでスキャンして、書籍情報を自動取得・管理できるWebアプリケーションです。
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
 
-## クイックスタート
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            line-height: 1.7;
+            min-height: 100vh;
+        }
 
-### 1. アクセス
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
 
-GitHub Pagesで公開中:
+        header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
 
-```
-https://[ユーザー名].github.io/library-management-pe/
-```
+        header h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 8px;
+        }
 
-### 2. 使い方
+        header p {
+            color: var(--text-muted);
+            font-size: 1.1rem;
+        }
 
-1. 「カメラ開始」ボタンをクリック
-2. カメラを選択（複数台ある場合）
-3. ISBNバーコードをカメラに向ける
-4. 自動的に書籍情報が取得されてリストに追加される
+        section {
+            background: var(--card-bg);
+            border-radius: var(--radius);
+            padding: 24px;
+            margin-bottom: 20px;
+            box-shadow: var(--shadow);
+        }
 
-### 3. 保存・エクスポート
+        h2 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid var(--primary);
+        }
 
-- 保存: CSVファイルとしてダウンロード
-- CSVダウンロード: 別の名前で保存
-- クリア: リストを空にする
+        h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin: 20px 0 12px;
+            color: var(--primary);
+        }
 
-## 機能
+        p {
+            margin-bottom: 12px;
+        }
 
-- カメラスキャン: スマホのカメラやWebカメラでISBNを読み取り
-- 書籍情報自動取得: Google Books APIでタイトル・著者・表紙を自動取得
-- CSVエクスポート: スキャン結果をCSVで保存
-- モバイル対応: スマホ・タブレット・デスクトップ全て対応
-- インストール不要: ブラウザだけで動く（Python不要）
+        ul, ol {
+            margin: 12px 0 16px 24px;
+        }
 
-## 動作環境
+        li {
+            margin-bottom: 8px;
+        }
 
-- Chrome, Safari, Firefox, Edge 最新版
-- カメラ付きデバイス
-- HTTPS接続（カメラアクセスには必須）
+        a {
+            color: var(--primary);
+            text-decoration: none;
+        }
 
-> 注意: iOS SafariではHTTPSが必須です。GitHub Pagesは自動HTTPS対応なのでご安心ください。
+        a:hover {
+            text-decoration: underline;
+        }
 
-## 開発
+        code {
+            background: var(--code-bg);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-family: ui-monospace, SFMono-Regular, "SF Mono", Menlo, Consolas, monospace;
+            font-size: 0.9em;
+        }
 
-### ローカルで実行
+        pre {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 16px;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 16px 0;
+        }
 
-```bash
-# docsフォルダで簡易サーバー起動
-cd docs
+        pre code {
+            background: none;
+            padding: 0;
+            color: inherit;
+        }
+
+        blockquote {
+            border-left: 4px solid var(--primary);
+            padding-left: 16px;
+            margin: 16px 0;
+            color: var(--text-muted);
+            font-style: italic;
+        }
+
+        .file-tree {
+            background: var(--code-bg);
+            padding: 16px;
+            border-radius: 8px;
+            font-family: ui-monospace, SFMono-Regular, monospace;
+            font-size: 0.85em;
+            overflow-x: auto;
+        }
+
+        .file-tree .dir {
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 16px 0;
+        }
+
+        th, td {
+            padding: 12px;
+            text-align: left;
+            border-bottom: 1px solid var(--border);
+        }
+
+        th {
+            background: var(--code-bg);
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--code-bg);
+        }
+
+        .back-link {
+            text-align: center;
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+        }
+
+        .back-link a {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: var(--primary);
+            color: white;
+            border-radius: 8px;
+            font-weight: 500;
+            text-decoration: none;
+        }
+
+        .back-link a:hover {
+            background: var(--primary-hover);
+            text-decoration: none;
+        }
+
+        footer {
+            text-align: center;
+            padding: 30px 0;
+            color: var(--text-muted);
+            font-size: 0.875rem;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 20px 16px;
+            }
+
+            header h1 {
+                font-size: 1.5rem;
+            }
+
+            section {
+                padding: 16px;
+            }
+
+            pre {
+                padding: 12px;
+                font-size: 0.85em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>ISBNスキャナー</h1>
+            <p>ブラウザ版の使い方</p>
+        </header>
+
+        <section id="quickstart">
+            <h2>クイックスタート</h2>
+            
+            <h3>1. アクセス</h3>
+            <p>GitHub Pagesで公開中:</p>
+            <pre><code>https://watanabe3tipapa.github.io/library-management-pe/</code></pre>
+            
+            <h3>2. 使い方</h3>
+            <ol>
+                <li>「カメラ開始」ボタンをクリック</li>
+                <li>カメラを選択（複数台ある場合）</li>
+                <li>ISBNバーコードをカメラに向ける</li>
+                <li>自動的に書籍情報が取得されてリストに追加される</li>
+            </ol>
+            
+            <h3>3. 保存・エクスポート</h3>
+            <ul>
+                <li><strong>保存</strong>: CSVファイルとしてダウンロード</li>
+                <li><strong>CSVダウンロード</strong>: 別の名前で保存</li>
+                <li><strong>クリア</strong>: リストを空にする</li>
+            </ul>
+        </section>
+
+        <section id="features">
+            <h2>機能</h2>
+            <ul>
+                <li><strong>カメラスキャン</strong>: スマホのカメラやWebカメラでISBNを読み取り</li>
+                <li><strong>書籍情報自動取得</strong>: Google Books APIでタイトル・著者・表紙を自動取得</li>
+                <li><strong>CSVエクスポート</strong>: スキャン結果をCSVで保存</li>
+                <li><strong>モバイル対応</strong>: スマホ・タブレット・デスクトップ全て対応</li>
+                <li><strong>インストール不要</strong>: ブラウザだけで動く（Python不要）</li>
+            </ul>
+        </section>
+
+        <section id="environment">
+            <h2>動作環境</h2>
+            <ul>
+                <li>Chrome, Safari, Firefox, Edge 最新版</li>
+                <li>カメラ付きデバイス</li>
+                <li>HTTPS接続（カメラアクセスには必須）</li>
+            </ul>
+            <blockquote>
+                注意: iOS SafariではHTTPSが必須です。GitHub Pagesは自動HTTPS対応なのでご安心ください。
+            </blockquote>
+        </section>
+
+        <section id="development">
+            <h2>開発</h2>
+            
+            <h3>ローカルで実行</h3>
+            <pre><code>cd docs
 python3 -m http.server 8000
-# → http://localhost:8000 でアクセス
-```
+# → http://localhost:8000 でアクセス</code></pre>
+            
+            <h3>ファイル構成</h3>
+            <div class="file-tree">
+docs/<br>
+├── index.html    メイン画面<br>
+├── style.css    スタイリング<br>
+├── script.js    ロジック<br>
+└── USAGE.md     このドキュメント
+            </div>
+        </section>
 
-### ファイル構成
+        <section id="tech-stack">
+            <h2>技術スタック</h2>
+            <ul>
+                <li><strong>html5-qrcode</strong>: バーコード読み取り（ZXingベース）</li>
+                <li><strong>Google Books API</strong>: 書籍情報取得</li>
+                <li><strong>Vanilla JS</strong>: ロジック（依存関係なし）</li>
+            </ul>
+        </section>
 
-```
-docs/
-├── index.html    # メイン画面
-├── style.css    # スタイリング
-├── script.js    # ロジック
-└── USAGE.html   # このドキュメント
-```
+        <section id="license">
+            <h2>ライセンス</h2>
+            <p>MIT License</p>
+        </section>
 
-## 技術スタック
+        <div class="back-link">
+            <a href="index.html">スキャナーを開く</a>
+        </div>
 
-- html5-qrcode: バーコード読み取り（ZXingベース）
-- Google Books API: 書籍情報取得
-- Vanilla JS: ロジック（依存関係なし）
-
-## ライセンス
-
-MIT License
+        <footer>
+            <p>Library Management Tools v0.2.0</p>
+        </footer>
+    </div>
+</body>
+</html>

@@ -14,3 +14,8 @@ dependencies = [
     "Pillow>=11.0.0",
     "flask>=3.0.0",
 ]
+
+[dependency-groups]
+dev = [
+    "pytest>=9.0.2",
+]
