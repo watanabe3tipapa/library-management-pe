@@ -36,7 +36,7 @@ Open http://localhost:5005 in your browser.
 
 ## Documentation
 
-- Browser version: [docs/USAGE.html](docs/USAGE.html)
+- Browser version: [USAGE.html](https://watanabe3tipapa.github.io/library-management-pe/USAGE.html)
 - Python version: [USAGE.md](USAGE.md)
 
 ## License
@@ -45,4 +45,4 @@ MIT License - see LICENSE file
 
 ## Version
 
-v0.2.0
+v0.1.0
