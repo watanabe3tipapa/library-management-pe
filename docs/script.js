@@ -7,6 +7,7 @@ let isScanning = false;
 // DOM Elements
 const startBtn = document.getElementById('startBtn');
 const stopBtn = document.getElementById('stopBtn');
+const refreshBtn = document.getElementById('refreshBtn');
 const cameraSelect = document.getElementById('cameraSelect');
 const booksList = document.getElementById('booksList');
 const countEl = document.getElementById('count');
@@ -18,6 +19,11 @@ const loadingEl = document.getElementById('loading');
 // Initialize camera list
 async function initCameras() {
     try {
+        // First request camera permission
+        const stream = await navigator.mediaDevices.getUserMedia({ video: true });
+        stream.getTracks().forEach(track => track.stop());
+        
+        // Then enumerate devices
         const devices = await navigator.mediaDevices.enumerateDevices();
         const videoDevices = devices.filter(d => d.kind === 'videoinput');
         
@@ -297,6 +303,7 @@ function escapeHtml(text) {
 // Event listeners
 startBtn.addEventListener('click', startScanner);
 stopBtn.addEventListener('click', stopScanner);
+refreshBtn.addEventListener('click', initCameras);
 saveBtn.addEventListener('click', saveToCSV);
 downloadBtn.addEventListener('click', downloadCSV);
 clearBtn.addEventListener('click', clearBooks);
@@ -305,6 +312,9 @@ clearBtn.addEventListener('click', clearBooks);
 document.addEventListener('DOMContentLoaded', () => {
     initCameras();
 });
+
+// Re-init cameras when permissions change
+navigator.mediaDevices.addEventListener('devicechange', initCameras);
 
 // Re-init cameras when permissions change
 navigator.mediaDevices.addEventListener('devicechange', initCameras);
